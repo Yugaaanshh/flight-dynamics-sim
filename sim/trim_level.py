@@ -33,10 +33,6 @@ from scipy.optimize import fsolve
 from typing import Tuple, Dict
 from dataclasses import dataclass
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from config import FullAircraftConfig
 from aero.coefficients import compute_all_coefficients, create_full_aero_coefficients
 from forces_moments import (

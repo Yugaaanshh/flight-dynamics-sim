@@ -13,9 +13,10 @@ References:
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-import sys
 import os
+import sys
+
+# Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config_loader import get_available_aircraft, load_aircraft, print_aircraft_summary

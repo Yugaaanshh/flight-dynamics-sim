@@ -17,10 +17,6 @@ from scipy.integrate import solve_ivp
 from typing import Callable, Tuple, Dict, List
 from dataclasses import dataclass, field
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
 from eom.longitudinal import LongitudinalLinearModel
 
 

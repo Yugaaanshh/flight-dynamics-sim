@@ -26,10 +26,6 @@ import numpy as np
 from typing import List, Dict, Callable, Tuple, Optional
 from dataclasses import dataclass
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from eom.six_dof import SixDoFModel, Controls
 
 

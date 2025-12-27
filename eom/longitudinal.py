@@ -28,10 +28,6 @@ References:
 import numpy as np
 from typing import Tuple, Dict, Any
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from config import LongitudinalDerivatives
 from aero.coefficients import compute_longitudinal_coefficients, AeroCoefficients
 

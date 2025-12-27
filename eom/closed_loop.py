@@ -22,10 +22,6 @@ from scipy.integrate import solve_ivp
 from dataclasses import dataclass
 from typing import Callable, Optional, Tuple, List
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from eom.six_dof import SixDoFModel, Controls
 from control.fcs import FlightControlSystem, LongitudinalSAS, LateralSAS
 

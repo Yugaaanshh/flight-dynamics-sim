@@ -24,10 +24,6 @@ from scipy.optimize import fsolve, root
 from typing import Dict, Optional, Tuple
 from dataclasses import dataclass
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from config import FullAircraftConfig
 from eom.six_dof import SixDoFModel, Controls
 from eom.six_dof import U as IDX_U, V as IDX_V, W as IDX_W

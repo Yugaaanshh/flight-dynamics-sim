@@ -19,6 +19,7 @@ import numpy as np
 import sys
 import os
 
+# Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config_loader import load_aircraft, get_available_aircraft

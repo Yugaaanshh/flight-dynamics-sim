@@ -32,10 +32,6 @@ import numpy as np
 from typing import Tuple, Dict, Callable
 from dataclasses import dataclass
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from config import FullAircraftConfig, AircraftParameters
 from aero.coefficients import compute_all_coefficients, AeroCoefficients, create_full_aero_coefficients
 from forces_moments import (

@@ -17,9 +17,10 @@ Run: python flight_dynamics_sim/examples/phase4_demo.py
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-import sys
 import os
+import sys
+
+# Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config import ROSKAM_BUSINESS_JET, BUSINESS_JET_6DOF

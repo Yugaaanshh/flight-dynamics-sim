@@ -21,10 +21,6 @@ from scipy.integrate import solve_ivp
 from dataclasses import replace
 from typing import Dict, List, Tuple, Optional
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from config import (
     LongitudinalDerivatives, LateralDerivatives, 
     FullAircraftConfig, AircraftParameters,

@@ -18,10 +18,6 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Any, Tuple
 
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
 from config import (
     LongitudinalDerivatives, LateralDerivatives,
     AircraftParameters, FullAircraftConfig
