@@ -1,0 +1,95 @@
+============================================================
+AIRCRAFT DATA VERIFICATION
+Checking planes.yaml against Roskam expected ranges
+============================================================
+
+Found 3 aircraft: ['business_jet', 'boeing_747', 'cessna_172']
+
+============================================================
+Verifying: BUSINESS_JET
+============================================================
+
+Loading business_jet (units=si)
+  Using pre-computed dimensional derivatives
+  Trim alpha estimate: 2.19 deg (CL_needed=0.410)
+  [LOAD] SUCCESS: Mass=7,257 kg
+  [TRIM] SUCCESS: alpha=0.93 deg, CL=0.3780, nz=1.000
+  [MODES] Found 5 modes
+  [CHECK] SP_zeta=0.292 OK (within)
+  [CHECK] SP_wn=1.789 OK (within)
+  [CHECK] Ph_zeta=0.040 OK (within)
+  [CHECK] Ph_T=100.397 OK (within)
+  [CHECK] DR_zeta=0.059 OK (within)
+  [CHECK] Roll_tau=1.510 OK (within)
+  [CHECK] Spiral_tau=92.041 OK (within)
+
+============================================================
+Verifying: BOEING_747
+============================================================
+
+Loading boeing_747 (units=imperial)
+  Computing derivatives: V=265.5 m/s, rho=0.2989 kg/m3, q_bar=10533.9 Pa
+  Mass=288773 kg, S=511.0 m2, b=59.6 m, c=8.32 m
+  Key derivs: Za=-91.7, Ma=-1.031, Mq=-0.3754, Lb=-3.604, Nb=0.929
+  Trim alpha estimate: 3.68 deg (CL_needed=0.526)
+  [LOAD] SUCCESS: Mass=288,773 kg
+  [TRIM] SUCCESS: alpha=1.00 deg, CL=0.3812, nz=1.000
+  [MODES] Found 5 modes
+  [CHECK] SP_zeta=0.337 OK (within)
+  [CHECK] SP_wn=1.074 OK (within)
+  [CHECK] Ph_zeta=0.033 OK (within)
+  [CHECK] Ph_T=149.562 OK (within)
+  [CHECK] DR_zeta=0.044 WARN (outside (0.10-0.35))
+  [CHECK] Roll_tau=1.605 OK (within)
+  [CHECK] Spiral_tau=83.755 OK (within)
+
+============================================================
+Verifying: CESSNA_172
+============================================================
+
+Loading cessna_172 (units=imperial)
+  Computing derivatives: V=53.6 m/s, rho=1.0565 kg/m3, q_bar=1520.2 Pa
+  Mass=1043 kg, S=16.2 m2, b=10.9 m, c=1.49 m
+  Key derivs: Za=-108.4, Ma=-17.899, Mq=-3.4716, Lb=-18.568, Nb=6.536
+  Trim alpha estimate: 1.32 deg (CL_needed=0.416)
+  [LOAD] SUCCESS: Mass=1,043 kg
+  [TRIM] SUCCESS: alpha=10.21 deg, CL=1.0662, nz=1.000
+  [MODES] Found 5 modes
+  [CHECK] SP_zeta=0.554 OK (within)
+  [CHECK] SP_wn=4.967 WARN (outside (2.00-4.00))
+  [CHECK] Ph_zeta=0.099 OK (within)
+  [CHECK] Ph_T=17.914 OK (within)
+  [CHECK] DR_zeta=0.264 OK (within)
+  [CHECK] Roll_tau=0.104 WARN (outside (0.30-2.00))
+  [CHECK] Spiral_tau=-57.807 WARN (outside (10.00-80.00))
+
+============================================================
+SENSITIVITY TESTS
+============================================================
+
+[SENSITIVITY] Testing M_alpha scaling for business_jet
+  M_alpha x 0.8 -> wn_sp = 1.616 rad/s
+  M_alpha x 1.0 -> wn_sp = 1.789 rad/s
+  M_alpha x 1.2 -> wn_sp = 1.947 rad/s
+  [PASS] Correct trend: higher |M_alpha| -> higher wn
+
+[SENSITIVITY] Testing M_alpha scaling for boeing_747
+  M_alpha x 0.8 -> wn_sp = 0.974 rad/s
+  M_alpha x 1.0 -> wn_sp = 1.074 rad/s
+  M_alpha x 1.2 -> wn_sp = 1.166 rad/s
+  [PASS] Correct trend: higher |M_alpha| -> higher wn
+
+[SENSITIVITY] Testing M_alpha scaling for cessna_172
+  M_alpha x 0.8 -> wn_sp = 4.605 rad/s
+  M_alpha x 1.0 -> wn_sp = 4.967 rad/s
+  M_alpha x 1.2 -> wn_sp = 5.305 rad/s
+  [PASS] Correct trend: higher |M_alpha| -> higher wn
+
+============================================================
+VERIFICATION SUMMARY
+============================================================
+  business_jet    [PASS] SP_z=0.29, DR_z=0.06
+  boeing_747      [PASS] SP_z=0.34, DR_z=0.04
+  cessna_172      [PASS] SP_z=0.55, DR_z=0.26
+
+*** ALL TESTS PASSED ***

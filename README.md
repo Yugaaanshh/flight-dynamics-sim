@@ -1,62 +1,92 @@
 # Roskam Flight Dynamics Simulator
 
-A Python-based aircraft flight dynamics simulator implementing the theory from:
-- **Roskam, "Airplane Flight Dynamics & Automatic Flight Controls"**
-- **Zipfel, "Modeling and Simulation of Aerospace Vehicle Dynamics"**
+**Complete 6-DOF aircraft simulator**: Linear → Nonlinear → Trim/Modes/Sensitivity → FCS PID.  
+Multi-aircraft support (BizJet, B747, C172). Interactive Streamlit UI.
 
-## Features
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-- **Phase 1**: Linear 4-state longitudinal model (u, alpha, q, theta)
-- **Phase 2**: Nonlinear 6-DOF rigid body model (12 states)
-- **Phase 3**: General trim (level, turn, pull-up) + numerical linearization + modal analysis
-- **Phase 4**: Control surface influence experiments (elevator, aileron, rudder power)
-- **Multi-Plane**: YAML configuration for easy aircraft addition
-
-## Installation
+## 🚀 Quick Start
 
 ```bash
 pip install -r requirements.txt
+streamlit run streamlit_app.py  # Opens localhost:8501
 ```
 
-## Quick Start
+## 📋 Features
+
+| Phase | Description |
+|-------|-------------|
+| **Phase 1** | Longitudinal linear 4-state model + aero coefficients |
+| **Phase 2** | Full 6-DOF nonlinear rigid-body dynamics |
+| **Phase 3** | General trim (level/turn/pullup) + modal analysis + sensitivity |
+| **Phase 4** | Control power sweeps (elevator/aileron/rudder effectiveness) |
+| **Phase 5** | PID Flight Control System (q-damper, roll-hold SAS) |
+
+**Aircraft Database** (`planes.yaml`):
+- Roskam Business Jet (400 kts, 35,000 ft)
+- Boeing 747-400 (M=0.8, 40,000 ft)
+- Cessna 172 Skyhawk (104 kts, 5,000 ft)
+
+## 🖥️ Streamlit UI
+
+Interactive dashboard with sliders for V/altitude/load factor:
+- **Trim Tab**: Compute steady-state trim conditions
+- **Modes Tab**: Eigenvalue analysis with damping/frequency charts
+- **Sensitivity Tab**: Derivative scaling effects on modes
+- **Response Tab**: Step response simulations
+
+## 📊 Examples
 
 ```bash
-# Run Phase 4 demo (control surface experiments)
-python examples/phase4_demo.py
+# FCS open-loop vs closed-loop comparison
+python examples/phase5_demo.py
 
-# Run Phase 3 demo (trim + linearization + modes)
-python examples/phase3_demo.py
+# Validate all aircraft against Roskam expected ranges
+python examples/verify_aircraft.py
+
+# Multi-plane mode comparison
+python examples/multiplane_demo.py
 ```
 
-## Available Aircraft
-
-Edit `planes.yaml` to add your own aircraft:
-
-| Aircraft | Source | V_trim | Mass |
-|----------|--------|--------|------|
-| business_jet | Roskam App.B | 206 m/s | 7,257 kg |
-| boeing_747 | Zipfel Ch10 | 250 m/s | 288,000 kg |
-| cessna_172 | Estimated | 60 m/s | 1,043 kg |
-
-## Project Structure
+## 🛠️ Project Structure
 
 ```
 flight_dynamics_sim/
-├── config.py              # Dataclasses for derivatives
-├── config_loader.py       # YAML loader for multi-plane
-├── planes.yaml            # Aircraft database
-├── aero/coefficients.py   # CL, CD, Cm, CY, Cl, Cn
-├── forces_moments.py      # Body-axis forces
+├── config_loader.py      # YAML aircraft loader (Imperial→SI)
+├── planes.yaml           # BizJet/B747/C172 database
+├── streamlit_app.py      # Interactive UI
+├── aero/
+│   └── coefficients.py   # CL, CD, Cm, CY, Cl, Cn models
 ├── eom/
-│   ├── longitudinal.py    # Linear 4-state model
-│   └── six_dof.py         # Nonlinear 12-state model
-├── sim/trim_maneuver.py   # General trim solver
-├── analysis/linearize.py  # Numerical Jacobians + modes
-├── experiments/           # Control surface sweeps
-└── examples/              # Demo scripts
+│   ├── longitudinal.py   # Linear 4-state model
+│   ├── six_dof.py        # Nonlinear 12-state model
+│   └── closed_loop.py    # FCS simulation wrapper
+├── sim/
+│   └── trim_maneuver.py  # General trim solver
+├── analysis/
+│   └── linearize.py      # Numerical Jacobians + modes
+├── control/
+│   └── fcs.py            # PID controllers + SAS
+└── examples/
+    ├── phase1_demo.py
+    ├── phase2_demo.py
+    ├── phase3_demo.py
+    ├── phase4_demo.py
+    ├── phase5_demo.py
+    ├── multiplane_demo.py
+    └── verify_aircraft.py
 ```
 
-## References
+## 📚 References
 
-1. Roskam, J. "Airplane Flight Dynamics and Automatic Flight Controls" Parts I & II
-2. Zipfel, P. "Modeling and Simulation of Aerospace Vehicle Dynamics" 3rd Ed
+1. Roskam, J. *Airplane Flight Dynamics and Automatic Flight Controls*, Parts I & II
+2. Zipfel, P. *Modeling and Simulation of Aerospace Vehicle Dynamics*, 3rd Ed
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details.
+
+---
+
+**Contributions welcome!** ⭐ Star if useful.

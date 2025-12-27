@@ -1,0 +1,172 @@
+======================================================================
+Phase 3 Demo: General Trim + Linearization + Mode Sensitivity
+Aircraft: Roskam Business Jet @ 400 kts / 35,000 ft
+Reference: Roskam Chapters 4-5
+======================================================================
+
+======================================================================
+STEP 1: TRIM SOLUTIONS
+======================================================================
+
+[1] Level Cruise (nz=1, phi=0, gamma=0)
+  Trim converged: Level Cruise
+    alpha = 1.23 deg, de = -1.66 deg
+    CL = 0.4110, nz = 1.00
+  Level Cruise:
+    Converged: Yes
+    V = 205.8 m/s, h = 10668 m
+    alpha = 1.23 deg, theta = 1.23 deg, phi = 0.0 deg
+    de = -1.66 deg, da = 0.00 deg, dr = 0.00 deg
+    nz = 1.00, CL = 0.4110
+    Thrust = 4635 N
+
+[2] Coordinated Turn (phi=30deg, nz=1.15)
+  Trim converged: Coordinated Turn (phi=30deg)
+    alpha = 1.93 deg, de = -2.61 deg
+    CL = 0.4746, nz = 1.15
+  Coordinated Turn (phi=30deg):
+    Converged: Yes
+    V = 205.8 m/s, h = 10668 m
+    alpha = 1.93 deg, theta = 1.93 deg, phi = 30.0 deg
+    de = -2.61 deg, da = 0.08 deg, dr = -0.74 deg
+    nz = 1.15, CL = 0.4746
+    Thrust = 5025 N
+
+[3] Pull-Up (nz=2.0)
+  Trim converged: Climb/Dive (gamma=2.9deg)
+    alpha = 5.76 deg, de = -7.80 deg
+    CL = 0.8220, nz = 2.00
+  Climb/Dive (gamma=2.9deg):
+    Converged: Yes
+    V = 205.8 m/s, h = 10668 m
+    alpha = 5.76 deg, theta = 8.63 deg, phi = 0.0 deg
+    de = -7.80 deg, da = 0.00 deg, dr = 0.00 deg
+    nz = 2.00, CL = 0.8220
+    Thrust = 11704 N
+
+======================================================================
+STEP 2: LINEARIZATION & MODE ANALYSIS
+======================================================================
+
+[Level Cruise]
+======================================================================
+Modes at Level Cruise
+======================================================================
+Mode            Lambda                    wn (rad/s)   zeta     T/tau (s) 
+----------------------------------------------------------------------
+Short-Period    -0.5220 +/- 1.5040j       1.592        0.328    T=4.18    
+Phugoid         -0.0023 +/- 0.0633j       0.063        0.037    T=99.27   
+Dutch Roll      -0.2056 +/- 1.5874j       1.601        0.128    T=3.96    
+Roll            -0.5058                   0.506        1.000    tau=1.98  
+Spiral          -0.0313                   0.031        1.000    tau=31.98 
+======================================================================
+
+[30deg Turn]
+======================================================================
+Modes at 30deg Turn
+======================================================================
+Mode            Lambda                    wn (rad/s)   zeta     T/tau (s) 
+----------------------------------------------------------------------
+Short-Period    -0.5220 +/- 1.5042j       1.592        0.328    T=4.18    
+Phugoid         -0.0027 +/- 0.0633j       0.063        0.043    T=99.30   
+Dutch Roll      -0.2147 +/- 1.6034j       1.618        0.133    T=3.92    
+Roll            -0.4919                   0.492        1.000    tau=2.03  
+Spiral          -0.0270                   0.027        1.000    tau=37.08 
+======================================================================
+
+[2g Pull-Up]
+======================================================================
+Modes at 2g Pull-Up
+======================================================================
+Mode            Lambda                    wn (rad/s)   zeta     T/tau (s) 
+----------------------------------------------------------------------
+Short-Period    -0.5245 +/- 1.5052j       1.594        0.329    T=4.17    
+Phugoid         -0.0032 +/- 0.0892j       0.089        0.036    T=70.43   
+Dutch Roll      -0.2293 +/- 1.6894j       1.705        0.134    T=3.72    
+Roll            -0.4653                   0.465        1.000    tau=2.15  
+Spiral          -0.0244                   0.024        1.000    tau=40.96 
+======================================================================
+
+======================================================================
+STEP 3: MODE COMPARISON ACROSS TRIMS
+======================================================================
+
+Mode            Level zeta   Turn zeta    Pullup zeta 
+-------------------------------------------------------
+Short-Period   0.328       0.328       0.329       
+Phugoid        0.037       0.043       0.036       
+Dutch Roll     0.128       0.133       0.134       
+Roll           1.000       1.000       1.000       
+Spiral         1.000       1.000       1.000       
+
+Observations:
+  - Short-period damping may change with load factor
+  - Dutch roll and spiral modes affected by bank angle
+
+======================================================================
+STEP 4: DERIVATIVE SENSITIVITY (Roskam Ch5.4)
+======================================================================
+
+Varying M_q (pitch damping) ▒20% about level trim:
+  M_q ╫ 0.8 = -0.3040
+  M_q ╫ 0.9 = -0.3420
+  M_q ╫ 1.0 = -0.3800
+  M_q ╫ 1.1 = -0.4180
+  M_q ╫ 1.2 = -0.4560
+
+Sensitivity to M_q
+------------------------------------------------------------
+Scale     z_Sho      wn_Sho    z_Phu      wn_Phu    
+------------------------------------------------------------
+0.8       0.307      1.576     0.037      0.064     
+0.9       0.318      1.584     0.037      0.064     
+1.0       0.328      1.592     0.037      0.063     
+1.1       0.338      1.600     0.037      0.063     
+1.2       0.348      1.608     0.037      0.063     
+------------------------------------------------------------
+
+Varying M_alpha (static stability) +/-20%:
+  M_alpha ╫ 0.8 = -1.8720
+  M_alpha ╫ 0.9 = -2.1060
+  M_alpha ╫ 1.0 = -2.3400
+  M_alpha ╫ 1.1 = -2.5740
+  M_alpha ╫ 1.2 = -2.8080
+
+Sensitivity to M_alpha
+------------------------------------------------------------
+Scale     z_Sho      wn_Sho    z_Phu      wn_Phu    
+------------------------------------------------------------
+0.8       0.362      1.441     0.035      0.065     
+0.9       0.344      1.519     0.036      0.064     
+1.0       0.328      1.592     0.037      0.063     
+1.1       0.314      1.662     0.038      0.063     
+1.2       0.302      1.729     0.038      0.062     
+------------------------------------------------------------
+
+Sensitivity plot saved: C:\Users\yugaa\.gemini\antigravity\scratch\flight_dynamics_sim\examples\phase3_sensitivity.png
+
+======================================================================
+SUMMARY
+======================================================================
+
+Phase 3 Implementation Complete:
+
+1. GENERAL TRIM SOLVER:
+   - Level cruise: alpha, de for L=W, M=0
+   - Coordinated turn: accounts for nz = 1/cos(phi)
+   - Pull-up: higher nz requires more alpha, de
+
+2. NUMERICAL LINEARIZATION:
+   - A, B matrices via central finite differences
+   - Works for any trim condition
+
+3. MODE ANALYSIS (Roskam Ch5):
+   - Longitudinal: Short-period, Phugoid
+   - Lateral: Dutch Roll, Roll, Spiral
+   - Eigenvalue -> wn, zeta, T classification
+
+4. SENSITIVITY ANALYSIS (Roskam Ch5.4):
+   - M_q affects short-period damping (higher |M_q| -> more damping)
+   - M_alpha affects short-period frequency (higher |M_alpha| -> higher wn)
+   - Quantifies effect of stability derivatives on flying qualities
+

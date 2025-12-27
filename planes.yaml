@@ -1,182 +1,199 @@
-# Multi-Plane Aircraft Configuration
-# 
-# Flight Dynamics Simulator - YAML Configuration File
-# 
-# Add new aircraft by copying an existing block and changing values.
-# All units: SI (kg, m, m^2, rad, 1/s, 1/s^2)
-# 
-# Derivative Notation (Roskam):
-#   Xu, Za, Mq... = dimensional stability derivatives
-#   Mde, Lda, Ndr = dimensional control derivatives
+# =============================================================================
+# MULTI-AIRCRAFT CONFIGURATION DATABASE
+# Flight Dynamics Simulator - planes.yaml
 #
-# References:
-#   - Roskam, "Airplane Flight Dynamics", Appendix B
-#   - Zipfel, "Modeling and Simulation of Aerospace Vehicle Dynamics", Ch10
+# Units Convention:
+#   - units: "SI" means all values are in kg, m, s, rad (no conversion needed)
+#   - units: "imperial" means values in slugs, ft, lbf, deg (loader converts)
+#
+# Aerodynamic derivatives are dimensionless (per radian) unless noted.
+# Dimensional derivatives (Xu, Mq, etc.) are auto-computed by config_loader.
+#
+# Sources:
+#   - business_jet: Roskam Appendix B
+#   - boeing_747: Cornell/Heffley B747 Data, Condition 9
+#   - cessna_172: UIUC / FlightGear Nonlinear Model
+# =============================================================================
 
-# =============================================================================
-# BUSINESS JET (Roskam Appendix B, Table B.2)
-# Cruise: 400 kts / 35,000 ft
-# =============================================================================
 business_jet:
-  name: "Roskam Business Jet"
-  description: "Twin-engine business jet from Roskam Appendix B"
+  meta:
+    name: "Roskam Business Jet"
+    units: "SI"
+    source: "Roskam Appendix B, Table B.2"
   
-  # Mass and geometry
-  mass: 7257        # kg
-  Ixx: 12000        # kg-m^2
-  Iyy: 55000        # kg-m^2
-  Izz: 56000        # kg-m^2
-  Ixz: 0            # kg-m^2 (assumed symmetric)
-  S: 21.55          # m^2 (wing area)
-  cbar: 1.98        # m (mean chord)
-  b: 18.0           # m (wingspan)
+  ref:
+    V_ref: 205.8       # m/s (400 kts)
+    h_ref: 10668.0     # m (35,000 ft)
+    rho_ref: 0.38      # kg/m^3
   
-  # Flight condition
-  V_trim: 205.8     # m/s (400 kts)
-  alpha_trim: 0.021 # rad (~1.2 deg)
-  rho: 0.38         # kg/m^3 (35,000 ft)
-  theta0: 0.0       # rad
+  mass_props:
+    mass_kg: 7257.0    # kg
+    Ixx: 12000.0       # kg-m^2
+    Iyy: 55000.0       # kg-m^2
+    Izz: 56000.0       # kg-m^2
+    Ixz: 0.0           # kg-m^2
   
-  # Longitudinal derivatives (dimensional)
-  derivs_long:
-    Xu: -0.0215     # 1/s
-    Xa: 14.7        # m/s^2
-    Zu: -0.227      # 1/s
-    Za: -135.8      # m/s^2
-    Zq: -3.5        # m/s
-    Mu: 0.0003      # 1/(m-s)
-    Ma: -3.0        # 1/s^2
-    Mq: -0.38       # 1/s
-    Xde: 0.0        # m/s^2
-    Zde: -12.3      # m/s^2
-    Mde: -1.73      # 1/s^2
+  geometry:
+    S: 21.55           # m^2
+    b: 18.0            # m
+    cbar: 1.98         # m
   
-  # Lateral-directional derivatives (dimensional)
-  derivs_lat:
-    Yb: -30.5       # m/s^2
-    Yp: 0.0         # m/s
-    Yr: 0.0         # m/s
-    Lb: -4.5        # 1/s^2
-    Lp: -0.51       # 1/s
-    Lr: 0.20        # 1/s
-    Nb: 2.55        # 1/s^2
-    Np: -0.064      # 1/s
-    Nr: -0.21       # 1/s
-    Yda: 0.0        # m/s^2
-    Ydr: 5.8        # m/s^2
-    Lda: -0.80      # 1/s^2
-    Ldr: 0.12       # 1/s^2
-    Nda: 0.024      # 1/s^2
-    Ndr: -0.45      # 1/s^2
+  aero_long:
+    CL0: 0.20
+    CL_alpha: 5.5
+    CD0: 0.020
+    CD_alpha: 0.30
+    Cm0: 0.05
+    Cm_alpha: -0.90
+    CL_q: 8.0
+    Cm_q: -18.0
+    CL_adot: 0.0
+    Cm_adot: -3.0
+    CL_de: 0.50
+    Cm_de: -1.60
+  
+  aero_lat:
+    CY_beta: -0.73
+    Cl_beta: -0.11
+    Cn_beta: 0.127
+    Cl_p: -0.50
+    Cn_p: -0.069
+    Cl_r: 0.20
+    Cn_r: -0.21
+    Cl_da: 0.178
+    Cn_da: -0.020
+    CY_dr: 0.19
+    Cl_dr: 0.024
+    Cn_dr: -0.074
+  
+  # Pre-computed dimensional derivatives (for backwards compatibility)
+  dimensional:
+    Xu: -0.0215
+    Xa: 14.7
+    Zu: -0.227
+    Za: -135.8
+    Zq: -3.5
+    Mu: 0.0003
+    Ma: -3.0
+    Mq: -0.38
+    Zde: -12.3
+    Mde: -1.73
+    Yb: -30.5
+    Lb: -4.5
+    Nb: 2.55
+    Lp: -0.51
+    Np: -0.064
+    Lr: 0.20
+    Nr: -0.21
+    Lda: -0.80
+    Nda: 0.024
+    Ydr: 5.8
+    Ldr: 0.12
+    Ndr: -0.45
 
-# =============================================================================
-# BOEING 747 (Zipfel Ch10, NASA Transport Data)
-# Cruise: Mach 0.85 / 10,000 m
-# =============================================================================
+
 boeing_747:
-  name: "Boeing 747-100"
-  description: "Heavy transport from Zipfel Ch10 / NASA data"
+  meta:
+    name: "Boeing 747-400 (Cruise)"
+    units: "imperial"
+    source: "Cornell/Heffley B747 Data, Condition 9"
   
-  # Mass and geometry
-  mass: 288000      # kg (cruise weight)
-  Ixx: 18200000     # kg-m^2
-  Iyy: 33100000     # kg-m^2
-  Izz: 49700000     # kg-m^2
-  Ixz: 970000       # kg-m^2
-  S: 511            # m^2 (wing area)
-  cbar: 8.32        # m (mean chord)
-  b: 59.64          # m (wingspan)
+  ref:
+    V_ref: 871.0       # ft/s (M=0.8 at 40,000 ft)
+    h_ref: 40000.0     # ft
+    rho_ref: 0.00058   # slug/ft^3 (40,000 ft)
   
-  # Flight condition
-  V_trim: 250.0     # m/s (Mach 0.85 at 10km)
-  alpha_trim: 0.035 # rad (~2 deg cruise)
-  rho: 0.41         # kg/m^3 (10km altitude)
-  theta0: 0.0       # rad
+  mass_props:
+    weight_lbf: 636636.0
+    Ixx: 18.2e6        # slug-ft^2
+    Iyy: 33.1e6        # slug-ft^2
+    Izz: 49.7e6        # slug-ft^2
+    Ixz: -1.56e6       # slug-ft^2
   
-  # Longitudinal derivatives (dimensional, NASA/Zipfel data)
-  derivs_long:
-    Xu: -0.0096     # 1/s
-    Xa: 20.0        # m/s^2
-    Zu: -0.16       # 1/s
-    Za: -355.0      # m/s^2
-    Zq: -8.8        # m/s
-    Mu: 0.0         # 1/(m-s)
-    Ma: -1.43       # 1/s^2
-    Mq: -0.53       # 1/s
-    Xde: 0.0        # m/s^2
-    Zde: -14.0      # m/s^2
-    Mde: -0.97      # 1/s^2
+  geometry:
+    S: 5500.0          # ft^2
+    b: 195.7           # ft
+    cbar: 27.3         # ft
   
-  # Lateral-directional derivatives (dimensional)
-  derivs_lat:
-    Yb: -63.0       # m/s^2
-    Yp: 0.0         # m/s
-    Yr: 0.0         # m/s
-    Lb: -3.2        # 1/s^2
-    Lp: -0.92       # 1/s
-    Lr: 0.28        # 1/s
-    Nb: 1.2         # 1/s^2
-    Np: -0.05       # 1/s
-    Nr: -0.12       # 1/s
-    Yda: 0.0        # m/s^2
-    Ydr: 8.0        # m/s^2
-    Lda: -0.40      # 1/s^2
-    Ldr: 0.06       # 1/s^2
-    Nda: 0.01       # 1/s^2
-    Ndr: -0.20      # 1/s^2
+  aero_long:
+    CL0: 0.21
+    CL_ref: 0.660
+    alpha_ref_deg: 4.6
+    CL_alpha: 4.92
+    CD0: 0.0164
+    CD_alpha: 0.425
+    K: 0.042           # Induced drag factor
+    Cm0: 0.10
+    Cm_alpha: -1.033
+    CL_q: 6.00
+    Cm_q: -24.0
+    CL_adot: 5.91
+    Cm_adot: -6.41
+    CL_de: 0.367
+    Cm_de: -1.45
+  
+  aero_lat:
+    CY_beta: -0.88
+    Cl_beta: -0.277
+    Cn_beta: 0.195
+    Cl_p: -0.334
+    Cn_p: -0.0415
+    Cl_r: 0.300
+    Cn_r: -0.327
+    Cl_da: 0.0137
+    Cn_da: 0.0002
+    CY_dr: 0.1157
+    Cl_dr: 0.0070
+    Cn_dr: -0.1256
 
-# =============================================================================
-# CESSNA 172 (General Aviation example)
-# Cruise: 120 kts / 5,000 ft
-# =============================================================================
+
 cessna_172:
-  name: "Cessna 172 Skyhawk"
-  description: "Single-engine general aviation aircraft"
+  meta:
+    name: "Cessna 172 Skyhawk"
+    units: "imperial"
+    source: "UIUC / FlightGear Nonlinear Model"
   
-  # Mass and geometry  
-  mass: 1043        # kg (typical cruise)
-  Ixx: 1285         # kg-m^2
-  Iyy: 1824         # kg-m^2
-  Izz: 2667         # kg-m^2
-  Ixz: 0            # kg-m^2
-  S: 16.17          # m^2 (wing area)
-  cbar: 1.49        # m (mean chord)
-  b: 10.92          # m (wingspan)
+  ref:
+    V_ref: 176.0       # ft/s (~104 kts)
+    h_ref: 5000.0      # ft
+    rho_ref: 0.00205   # slug/ft^3 (5,000 ft)
   
-  # Flight condition
-  V_trim: 60.0      # m/s (120 kts)
-  alpha_trim: 0.05  # rad (~3 deg cruise)
-  rho: 1.06         # kg/m^3 (5,000 ft)
-  theta0: 0.0       # rad
+  mass_props:
+    weight_lbf: 2300.0
+    Ixx: 948.0         # slug-ft^2
+    Iyy: 1346.0        # slug-ft^2
+    Izz: 1967.0        # slug-ft^2
+    Ixz: 0.0           # slug-ft^2
   
-  # Longitudinal derivatives (dimensional, estimated)
-  derivs_long:
-    Xu: -0.045      # 1/s
-    Xa: 8.0         # m/s^2
-    Zu: -0.35       # 1/s
-    Za: -80.0       # m/s^2
-    Zq: -2.5        # m/s
-    Mu: 0.0         # 1/(m-s)
-    Ma: -4.5        # 1/s^2
-    Mq: -1.2        # 1/s
-    Xde: 0.0        # m/s^2
-    Zde: -8.0       # m/s^2
-    Mde: -2.5       # 1/s^2
+  geometry:
+    S: 174.0           # ft^2
+    b: 35.8            # ft
+    cbar: 4.9          # ft
   
-  # Lateral-directional derivatives (dimensional)
-  derivs_lat:
-    Yb: -20.0       # m/s^2
-    Yp: 0.0         # m/s
-    Yr: 0.0         # m/s
-    Lb: -6.0        # 1/s^2
-    Lp: -1.1        # 1/s
-    Lr: 0.15        # 1/s
-    Nb: 3.5         # 1/s^2
-    Np: -0.08       # 1/s
-    Nr: -0.45       # 1/s
-    Yda: 0.0        # m/s^2
-    Ydr: 4.0        # m/s^2
-    Lda: -1.2       # 1/s^2
-    Ldr: 0.08       # 1/s^2
-    Nda: 0.02       # 1/s^2
-    Ndr: -0.6       # 1/s^2
+  aero_long:
+    CL0: 0.31
+    CL_alpha: 4.60
+    CD0: 0.031
+    K: 0.054           # CD = CD0 + K * CL^2
+    Cm0: -0.015
+    Cm_alpha: -0.89
+    CL_q: 3.9
+    Cm_q: -12.4
+    CL_adot: 1.7
+    Cm_adot: -5.2
+    CL_de: 0.430
+    Cm_de: -1.28
+  
+  aero_lat:
+    CY_beta: -0.31
+    Cl_beta: -0.089
+    Cn_beta: 0.065
+    Cl_p: -0.47
+    Cn_p: -0.03
+    Cl_r: 0.096
+    Cn_r: -0.099
+    Cl_da: -0.178
+    Cn_da: 0.053
+    CY_dr: 0.187
+    Cl_dr: 0.0147
+    Cn_dr: -0.0657

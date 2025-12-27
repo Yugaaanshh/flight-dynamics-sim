@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "C:\Users\yugaa\.gemini\antigravity\scratch\flight_dynamics_sim\examples\phase5_demo.py", line 30, in <module>
+    from eom.closed_loop import simulate_closed_loop, simulate_open_loop
+  File "C:\Users\yugaa\.gemini\antigravity\scratch\flight_dynamics_sim\eom\closed_loop.py", line 29, in <module>
+    from eom.six_dof import SixDoFModel, IDX_U, IDX_V, IDX_W, IDX_P, IDX_Q, IDX_R, IDX_PHI, IDX_THETA, IDX_PSI
+ImportError: cannot import name 'IDX_U' from 'eom.six_dof' (C:\Users\yugaa\.gemini\antigravity\scratch\flight_dynamics_sim\eom\six_dof.py)
