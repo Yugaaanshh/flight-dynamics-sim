@@ -1,0 +1,182 @@
+# Multi-Plane Aircraft Configuration
+# 
+# Flight Dynamics Simulator - YAML Configuration File
+# 
+# Add new aircraft by copying an existing block and changing values.
+# All units: SI (kg, m, m^2, rad, 1/s, 1/s^2)
+# 
+# Derivative Notation (Roskam):
+#   Xu, Za, Mq... = dimensional stability derivatives
+#   Mde, Lda, Ndr = dimensional control derivatives
+#
+# References:
+#   - Roskam, "Airplane Flight Dynamics", Appendix B
+#   - Zipfel, "Modeling and Simulation of Aerospace Vehicle Dynamics", Ch10
+
+# =============================================================================
+# BUSINESS JET (Roskam Appendix B, Table B.2)
+# Cruise: 400 kts / 35,000 ft
+# =============================================================================
+business_jet:
+  name: "Roskam Business Jet"
+  description: "Twin-engine business jet from Roskam Appendix B"
+  
+  # Mass and geometry
+  mass: 7257        # kg
+  Ixx: 12000        # kg-m^2
+  Iyy: 55000        # kg-m^2
+  Izz: 56000        # kg-m^2
+  Ixz: 0            # kg-m^2 (assumed symmetric)
+  S: 21.55          # m^2 (wing area)
+  cbar: 1.98        # m (mean chord)
+  b: 18.0           # m (wingspan)
+  
+  # Flight condition
+  V_trim: 205.8     # m/s (400 kts)
+  alpha_trim: 0.021 # rad (~1.2 deg)
+  rho: 0.38         # kg/m^3 (35,000 ft)
+  theta0: 0.0       # rad
+  
+  # Longitudinal derivatives (dimensional)
+  derivs_long:
+    Xu: -0.0215     # 1/s
+    Xa: 14.7        # m/s^2
+    Zu: -0.227      # 1/s
+    Za: -135.8      # m/s^2
+    Zq: -3.5        # m/s
+    Mu: 0.0003      # 1/(m-s)
+    Ma: -3.0        # 1/s^2
+    Mq: -0.38       # 1/s
+    Xde: 0.0        # m/s^2
+    Zde: -12.3      # m/s^2
+    Mde: -1.73      # 1/s^2
+  
+  # Lateral-directional derivatives (dimensional)
+  derivs_lat:
+    Yb: -30.5       # m/s^2
+    Yp: 0.0         # m/s
+    Yr: 0.0         # m/s
+    Lb: -4.5        # 1/s^2
+    Lp: -0.51       # 1/s
+    Lr: 0.20        # 1/s
+    Nb: 2.55        # 1/s^2
+    Np: -0.064      # 1/s
+    Nr: -0.21       # 1/s
+    Yda: 0.0        # m/s^2
+    Ydr: 5.8        # m/s^2
+    Lda: -0.80      # 1/s^2
+    Ldr: 0.12       # 1/s^2
+    Nda: 0.024      # 1/s^2
+    Ndr: -0.45      # 1/s^2
+
+# =============================================================================
+# BOEING 747 (Zipfel Ch10, NASA Transport Data)
+# Cruise: Mach 0.85 / 10,000 m
+# =============================================================================
+boeing_747:
+  name: "Boeing 747-100"
+  description: "Heavy transport from Zipfel Ch10 / NASA data"
+  
+  # Mass and geometry
+  mass: 288000      # kg (cruise weight)
+  Ixx: 18200000     # kg-m^2
+  Iyy: 33100000     # kg-m^2
+  Izz: 49700000     # kg-m^2
+  Ixz: 970000       # kg-m^2
+  S: 511            # m^2 (wing area)
+  cbar: 8.32        # m (mean chord)
+  b: 59.64          # m (wingspan)
+  
+  # Flight condition
+  V_trim: 250.0     # m/s (Mach 0.85 at 10km)
+  alpha_trim: 0.035 # rad (~2 deg cruise)
+  rho: 0.41         # kg/m^3 (10km altitude)
+  theta0: 0.0       # rad
+  
+  # Longitudinal derivatives (dimensional, NASA/Zipfel data)
+  derivs_long:
+    Xu: -0.0096     # 1/s
+    Xa: 20.0        # m/s^2
+    Zu: -0.16       # 1/s
+    Za: -355.0      # m/s^2
+    Zq: -8.8        # m/s
+    Mu: 0.0         # 1/(m-s)
+    Ma: -1.43       # 1/s^2
+    Mq: -0.53       # 1/s
+    Xde: 0.0        # m/s^2
+    Zde: -14.0      # m/s^2
+    Mde: -0.97      # 1/s^2
+  
+  # Lateral-directional derivatives (dimensional)
+  derivs_lat:
+    Yb: -63.0       # m/s^2
+    Yp: 0.0         # m/s
+    Yr: 0.0         # m/s
+    Lb: -3.2        # 1/s^2
+    Lp: -0.92       # 1/s
+    Lr: 0.28        # 1/s
+    Nb: 1.2         # 1/s^2
+    Np: -0.05       # 1/s
+    Nr: -0.12       # 1/s
+    Yda: 0.0        # m/s^2
+    Ydr: 8.0        # m/s^2
+    Lda: -0.40      # 1/s^2
+    Ldr: 0.06       # 1/s^2
+    Nda: 0.01       # 1/s^2
+    Ndr: -0.20      # 1/s^2
+
+# =============================================================================
+# CESSNA 172 (General Aviation example)
+# Cruise: 120 kts / 5,000 ft
+# =============================================================================
+cessna_172:
+  name: "Cessna 172 Skyhawk"
+  description: "Single-engine general aviation aircraft"
+  
+  # Mass and geometry  
+  mass: 1043        # kg (typical cruise)
+  Ixx: 1285         # kg-m^2
+  Iyy: 1824         # kg-m^2
+  Izz: 2667         # kg-m^2
+  Ixz: 0            # kg-m^2
+  S: 16.17          # m^2 (wing area)
+  cbar: 1.49        # m (mean chord)
+  b: 10.92          # m (wingspan)
+  
+  # Flight condition
+  V_trim: 60.0      # m/s (120 kts)
+  alpha_trim: 0.05  # rad (~3 deg cruise)
+  rho: 1.06         # kg/m^3 (5,000 ft)
+  theta0: 0.0       # rad
+  
+  # Longitudinal derivatives (dimensional, estimated)
+  derivs_long:
+    Xu: -0.045      # 1/s
+    Xa: 8.0         # m/s^2
+    Zu: -0.35       # 1/s
+    Za: -80.0       # m/s^2
+    Zq: -2.5        # m/s
+    Mu: 0.0         # 1/(m-s)
+    Ma: -4.5        # 1/s^2
+    Mq: -1.2        # 1/s
+    Xde: 0.0        # m/s^2
+    Zde: -8.0       # m/s^2
+    Mde: -2.5       # 1/s^2
+  
+  # Lateral-directional derivatives (dimensional)
+  derivs_lat:
+    Yb: -20.0       # m/s^2
+    Yp: 0.0         # m/s
+    Yr: 0.0         # m/s
+    Lb: -6.0        # 1/s^2
+    Lp: -1.1        # 1/s
+    Lr: 0.15        # 1/s
+    Nb: 3.5         # 1/s^2
+    Np: -0.08       # 1/s
+    Nr: -0.45       # 1/s
+    Yda: 0.0        # m/s^2
+    Ydr: 4.0        # m/s^2
+    Lda: -1.2       # 1/s^2
+    Ldr: 0.08       # 1/s^2
+    Nda: 0.02       # 1/s^2
+    Ndr: -0.6       # 1/s^2
