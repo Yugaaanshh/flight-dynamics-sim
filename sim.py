@@ -158,7 +158,7 @@ def simulate_step_response(
         delta_e = elevator_step(t, t_step, amplitude)
         return model.dynamics(t, x, delta_e)
     
-    t_eval = np.arange(t_span[0], t_span[1], dt)
+    t_eval = np.linspace(t_span[0], t_span[1], int((t_span[1]-t_span[0])/dt) + 1)
     
     sol = solve_ivp(
         dynamics,
@@ -221,7 +221,7 @@ def simulate_with_input(
         delta_e = control_func(t)
         return model.dynamics(t, x, delta_e)
     
-    t_eval = np.arange(t_span[0], t_span[1], dt)
+    t_eval = np.linspace(t_span[0], t_span[1], int((t_span[1]-t_span[0])/dt) + 1)
     
     sol = solve_ivp(
         dynamics,

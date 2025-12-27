@@ -97,7 +97,7 @@ def main():
     
     # Run 6-DOF simulation
     eom_func = create_6dof_eom_function(model_6dof, control_func_elevator)
-    t_eval = np.arange(t_span[0], t_span[1], dt)
+    t_eval = np.linspace(t_span[0], t_span[1], int((t_span[1]-t_span[0])/dt) + 1)
     
     print("  Running 6-DOF nonlinear simulation...")
     sol_6dof = solve_ivp(

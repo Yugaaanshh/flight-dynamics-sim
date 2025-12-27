@@ -9,7 +9,14 @@ Multi-aircraft support (BizJet, B747, C172). Interactive Streamlit UI.
 ## 🚀 Quick Start
 
 ```bash
-pip install -r requirements.txt
+# Clone repository
+git clone https://github.com/Yugaanshh/flight-dynamics-sim.git
+cd flight-dynamics-sim
+
+# Install in editable mode (fixes all imports)
+pip install -e .
+
+# Launch interactive UI
 streamlit run streamlit_app.py  # Opens localhost:8501
 ```
 

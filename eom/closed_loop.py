@@ -164,7 +164,7 @@ def simulate_closed_loop(
         return x_dot
     
     # Solve ODE
-    t_eval = np.arange(t_span[0], t_span[1], dt)
+    t_eval = np.linspace(t_span[0], t_span[1], int((t_span[1]-t_span[0])/dt) + 1)
     sol = solve_ivp(dynamics, t_span, x0, method=method, t_eval=t_eval, max_step=dt)
     
     # Build result
@@ -236,7 +236,7 @@ def simulate_open_loop(
         ctrl = Controls(delta_e=u[0], delta_a=u[1], delta_r=u[2], thrust=u[3])
         return model.dynamics(t, x, ctrl)
     
-    t_eval = np.arange(t_span[0], t_span[1], dt)
+    t_eval = np.linspace(t_span[0], t_span[1], int((t_span[1]-t_span[0])/dt) + 1)
     sol = solve_ivp(dynamics, t_span, x0, method=method, t_eval=t_eval, max_step=dt)
     
     N = len(sol.t)
